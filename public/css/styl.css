@@ -1,3 +1,7 @@
+body {
+	background: url('../img/dust.png') repeat !important;
+}
+
 #chatLog {
 	border-top: 1px solid #ddd;
 	border-bottom: 1px solid #ddd;
@@ -7,6 +11,43 @@
 	height: 300px;
 	overflow: auto;
 }
+
+#form_box {
+	float: left;
+	width: 500px;
+	border: 1px solid #444;
+	background: #fff;
+	margin-left: 25px;
+	border: solid 0 #FFF;
+	-moz-box-shadow: 1px 1px 5px #CCC;
+	-webkit-box-shadow: 1px 1px 5px #CCC;
+	box-shadow: 1px 1px 5px #CCC;
+	margin-bottom: 10px;
+	padding: 15px;	
+}
+
+.msg_avatar {
+	width: 45px;
+	height: 45px;
+	
+	background-size: cover;
+	margin-right: 8px;
+	float: left;
+	border: 1px solid #eeeeee;
+	-webkit-border-radius: 4px;
+	-moz-border-radius: 4px;
+	border-radius: 4px;
+	-webkit-box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.6);
+	box-shadow: 1px 1px 2px 0px rgba(0, 0, 0, 0.6);
+}
+
+#debug {
+	width: 300px;
+	height: 200px;
+	background: #eee;
+	float: right;
+}
+
 .bulb {
 	font-size: 16px;
 	font-family: arial, sans-serif;
@@ -14,4 +55,47 @@
 .bulb img {
 	height: 18px;
 	vertical-align: bottom;
+}
+
+.chatLeft {
+	float: left;
+	width: 500px;
+	border: 1px solid #444;
+	background: #fff;
+	margin-left: 25px;
+	border: solid 0 #FFF;
+	-moz-box-shadow: 1px 1px 5px #CCC;
+	-webkit-box-shadow: 1px 1px 5px #CCC;
+	box-shadow: 1px 1px 5px #CCC;
+	margin-bottom: 10px;
+	padding: 15px;
+}
+
+.jumbotron {
+	background-color: transparent !important;
+	max-width: 500px;
+}
+
+.roomsField{
+    border: solid;
+
+    width: 300px;
+    float:right;
+    top:0;
+    margin-right: 20px;
+		border: solid 0 #FFF;
+		background: #fff;
+		-moz-box-shadow: 1px 1px 5px #CCC;
+		-webkit-box-shadow: 1px 1px 5px #CCC;
+		box-shadow: 1px 1px 5px #CCC;
+		margin-bottom: 10px;
+		padding: 15px;
+}
+
+.newRoomField{
+    margin-top: 240px;
+}
+
+.navbar {
+	border-radius: 0px !important;
 }

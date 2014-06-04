@@ -7,24 +7,119 @@
   <script src="/socket.io/socket.io.js"></script>
   <script src="angular/angular.min.js"></script>
   <script src="js/main.js"></script>
-  <link rel="stylesheet" href="css/styl.css">
+  
+  <link rel="stylesheet" href="css/styl.css">   
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <script src="../_js/jquery.gomap-1.3.2.min.js"></script>
 </head>
 
 <body data-ng-app="czatApka">
   <div data-ng-controller="chatCtrlr">
-    <div data-ng-hide="connected" class="bulb">
-      <img src="img/bullet_red.png"> trwa łączenie…
+    <nav class="navbar navbar-inverse " role="navigation">
+        <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/">LChat</a>
+            <ul class="nav navbar-nav">
+              <li data-ng-hide="connected" class="bulb">
+                <img src="img/bullet_red.png">
+              </li>
+              <li data-ng-show="connected" class="bulb">
+                <img src="img/bullet_green.png">
+              </li>
+            </ul>
+          </div>  <!-- /.navbar header -->
+  
+          <!-- COLLAPSE -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <!-- PO ZALOGOWANIU -->
+            <ul class="nav navbar-nav" data-ng-show="loggedIn">
+             <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dodaj<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/addplace">Miejsce</a></li>
+                <li><a href="/addevent">Wydarzenie</a></li>
+              </ul>
+            </li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">Wyświetl<b class="caret"></b></a>
+              <ul class="dropdown-menu">
+                <li><a href="/showplaces">Miejsca</a></li>
+                <li><a href="/showevents">Wydarzenia</a></li>
+              </ul>
+            </li>
+          </ul>
+          <!-- /.PO ZALOGOWANIU -->
+  
+          <!-- NAVBAR RIGHT -->
+          <ul class="nav navbar-nav navbar-right" data-ng-hide="loggedIn">
+            <li><a href="/login">Zaloguj</a></li>
+            <li><a href="/signup">Zarejestruj się</a></li>
+  
+          </ul>
+          <ul class="nav navbar-nav navbar-right" data-ng-show="loggedIn">
+            <li ><a href="/my-profile">{{username}}<img src="http://localhost:4000/img/{{avatar}}.jpg" class="msg_avatar"/></a></li>
+            <li><a href="/logout">Wyloguj</a></li>
+          </ul>
+          <!-- /.NAVBAR RIGHT -->
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+  
+  
+
+    <div class="chatLeft">
+      <div data-ng-hide="connected" class="bulb">
+        <img src="img/bullet_red.png"> trwa łączenie…
+      </div>
+      <div data-ng-show="connected" id="bullet_green" class="bulb">
+        <img src="img/bullet_green.png" > połączono
+      </div>
+      <div id="chatLog">
+        <div data-ng-repeat="msg in msgs track by $index" style="clear:both;"><img src="http://localhost:4000/img/{{avatar}}.jpg" class="msg_avatar"/>{{msg}}</div>
+      </div>
+      <div>
+        
+        <p><!--Wprowadz swój login:-->
+          <!--<input type="text" id="login_input" data-ng-model="msg.login" maxlength="20" value="{{username}}">-->
+          <input type="hidden" id="login_input" maxlength="20" value="{{username}}">
+          <input type="hidden" id="avatar_input" maxlength="20" value="{{avatar}}">
+        </p>
+      </div>
+      <form action="" data-ng-submit="sendMsg()">
+        Wprowadz swoją wiadomość:
+        <!--<input type="text" data-ng-model="msg.text" maxlength="20">-->
+        <textarea data-ng-model="msg.text" maxlength="20" rows="4" cols="74" class="messageTextarea"></textarea>
+        <input class="btn btn-primary btn-lg" id="sendMsgButton" type="submit" style="float:right;">
+        
+      </form>
+      <div data-ng-model="channelInformation"></div>
+    </div><!--chatLeft-->
+    <div class="roomsField">
+        <div data-ng-repeat="room in rooms track by $index">
+            <button ng-click="chooseRoom(room);">{{room}}</button>
+        </div>
+
+        <!--<button ng-click="joinRoom()">Dołącz do pokoju</button>-->
+
+        <div class="newRoomField">
+            <input type="text" placeholder="Nazwa nowego pokoju" data-ng-model="new.room.name">
+            <button ng-click="newRoom()">Stwórz pokój</button>
+        </div>
+    </div><!--roomsField-->
+    <div id="debug">
+      
+      
     </div>
-    <div data-ng-show="connected" class="bulb">
-      <img src="img/bullet_green.png"> połączono
-    </div>
-    <div id="chatLog">
-      <div data-ng-repeat="msg in msgs track by $index">{{msg}}</div>
-    </div>
-    <form action="" data-ng-submit="sendMsg()">
-      <input type="text" data-ng-model="msg.text" maxlength="20">
-    </form>
-  </div>
+  </div><!--chatCtrlr-->
 </body>
 
 </html>
