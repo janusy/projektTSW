@@ -164,7 +164,7 @@ var redisSetUser = function(username, password, avatar) {
 			console.log("REPLY SET: " + reply.toString());
 		});
 		client.set(username + '_avatar', avatar, function(err, reply) {
-			console.log("REPLY AVATAR SET: " + reply.toString());
+			console.log("REPLY AVATAR SET: " + username + '_avatar : ' + avatar + reply.toString());
 		});
 	}
 	
@@ -179,13 +179,14 @@ var redisSetUser = function(username, password, avatar) {
 	
 // FUNKCJA POBIERAJACA WARTOSC Z BAZY REDISA BEZ HASLA
 var redisGet = function(data) {
+	console.log("DATA redisGet: " + data);
 	var deferred = Q.defer();
 	client.get(data, function(err, reply) {
 		if (reply) {
-			console.log("REPLY GET redisGet: " + reply.toString());
+			console.log("REPLY GET IF redisGet: " + reply.toString());
 			deferred.resolve(reply);
 		} else {
-			console.log('no reply');
+			console.log('redisGet no reply');
 			deferred.resolve(false);
 		}
 	});
