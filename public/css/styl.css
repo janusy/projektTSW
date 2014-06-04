@@ -48,6 +48,12 @@ body {
 	float: right;
 }
 
+.chatSingleMessage {
+	min-height: 60px;
+	clear: both;
+	border-bottom: 1px solid #ccc;
+}
+
 .bulb {
 	font-size: 16px;
 	font-family: arial, sans-serif;

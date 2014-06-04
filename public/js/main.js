@@ -74,12 +74,12 @@ app.controller('chatCtrlr', ['$scope', 'socket',
              }
         });
         
-        $(document).ready(function(){
+        var repaceQM = function(){
             $('.chatMessage').each(function(){
-              $(this).html($(this).html().replace("img", "bla"));
+              $(this).html($(this).html().replace('"""', ' '));
             });
             //alert('aaa');
-          });
+        };
         
         
         var tagsToReplace = {
@@ -95,9 +95,9 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         };
         
         var prepareMessageWithLogin = function(msg, login, avatar){
-            var avatarHtml = '<img src="http://localhost:4000/img/ + avatar +"' + '.jpg" class="msg_avatar" alt="' + login + '"/>';
+            var avatarHtml = '<img src="http://localhost:4000/img/' + avatar + '"' + '.jpg" class="msg_avatar" alt="' + login + '"/>';
             
-            return avatarHtml + login + ": " +  safe_tags_replace($scope.msg.text.substring(0, 20));
+            return safe_tags_replace($scope.msg.text.substring(0, 20));
         };
         
         $scope.msgs = [];
@@ -119,7 +119,14 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         $scope.sendMsg = function () {
             if ($scope.msg && $scope.msg.text) {
                 //socket.emit('send msg', safe_tags_replace($scope.msg.text.substring(0, 20)));
-                socket.emit('send msg', prepareMessageWithLogin($scope.msg.text, document.getElementById('login_input').value.toString(), document.getElementById('avatar_input').value.toString()));
+                var data = {
+                    login: document.getElementById('login_input').value.toString(),
+                    msg: prepareMessageWithLogin($scope.msg.text, document.getElementById('login_input').value.toString(), document.getElementById('avatar_input').value.toString()),
+                    avatar: $scope.avatar
+                }
+                console.log("DATA: " + data);
+                socket.emit('send msg', data);
+                repaceQM();
                 $scope.msg.text = '';
             }
         };
@@ -155,10 +162,26 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         });
         
         socket.on('rec msg', function (data) {
+            var wiadomosc = data.msg;
+            
+            //var msgHtml = 'login: ' + data.login + '<img src="http://localhost:4000/img/' + data.avatar + '.jpg" class="msg_avatar" alt="login"/>' + data.msg;
+            //var msgHtml = 'login: ' + data.login + 'msg: ' + data.msg + 'avatar: ' + data.avatar; 
+            var msgHtml = '<div class="chatSingleMessage"><img src="http://localhost:4000/img/' + data.avatar + '.jpg" class="msg_avatar" alt="login"/>' + data.msg;
+            
+            $scope.msgHtml = 'adffdfd' . wiadomosc;
+            
+            if (data.avatar != undefined) {
+                $( "#chatLog" ).append( msgHtml );
+            }
+            
+            
+            
             console.log("rec msg " + data);
             console.log($scope.msgs);
 
             $scope.msgs.unshift(data);
+            //$scope.msgs.push('<img src="http://localhost:4000/img/' + data.avatar + '"' + '.jpg" class="msg_avatar" alt="' + login + '"/>');
+            console.log(data);
             $scope.$digest();
         });
         
