@@ -45,7 +45,7 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         }
         var getUserAvatar = function() {
             console.log("PRZED WYSLANIEM1 MYURL2: " + "/getAvatarByUser/:" + $scope.username);
-            var myUrl2 = "/getAvatarByUser/:" + $scope.username;
+            var myUrl2 = "/getAvatarByUser/" + $scope.username;
             $.ajax({
                 url: myUrl2,
                 type: 'GET',
@@ -74,6 +74,13 @@ app.controller('chatCtrlr', ['$scope', 'socket',
              }
         });
         
+        $(document).ready(function(){
+            $('.chatMessage').each(function(){
+              $(this).html($(this).html().replace("img", "bla"));
+            });
+            //alert('aaa');
+          });
+        
         
         var tagsToReplace = {
             '&': '&amp;',
@@ -88,9 +95,9 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         };
         
         var prepareMessageWithLogin = function(msg, login, avatar){
-            //var msgAll = '<div style="background: #ccc;"' + avatar + '.jpg" class="msg_avatar" alt="' + login + '"></div>';
+            var avatarHtml = '<img src="http://localhost:4000/img/ + avatar +"' + '.jpg" class="msg_avatar" alt="' + login + '"/>';
             
-            return login + ": " +  safe_tags_replace($scope.msg.text.substring(0, 20));
+            return avatarHtml + login + ": " +  safe_tags_replace($scope.msg.text.substring(0, 20));
         };
         
         $scope.msgs = [];
@@ -112,7 +119,7 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         $scope.sendMsg = function () {
             if ($scope.msg && $scope.msg.text) {
                 //socket.emit('send msg', safe_tags_replace($scope.msg.text.substring(0, 20)));
-                socket.emit('send msg', prepareMessageWithLogin($scope.msg.text, document.getElementById('login_input').value, document.getElementById('avatar_input').value));
+                socket.emit('send msg', prepareMessageWithLogin($scope.msg.text, document.getElementById('login_input').value.toString(), document.getElementById('avatar_input').value.toString()));
                 $scope.msg.text = '';
             }
         };
