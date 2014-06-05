@@ -7,8 +7,6 @@ app.factory('socket', function () {
 
 app.controller('chatCtrlr', ['$scope', 'socket',
     function ($scope, socket) {
-        
-        
         $scope.connected = false;
         $scope.username = "";
         $scope.avatar = 5;
@@ -32,20 +30,12 @@ app.controller('chatCtrlr', ['$scope', 'socket',
                     }); 
                 } 
             });
-            
-
-            
-            //var div = document.getElementById('debug');
-            //div.innerHTML = $scope.loggedIn + ' yolo';
-          //document.getElementById('login_input').value='textosplayed' ; 
         }
         
         $( "#sendMsgButton" ).click(function() {
             $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
         });     
-        
-        
-        
+     
         var getUserAvatar = function() {
             console.log("PRZED WYSLANIEM1 MYURL2: " + "/getAvatarByUser/:" + $scope.username);
             var myUrl2 = "/getAvatarByUser/" + $scope.username;
@@ -65,8 +55,7 @@ app.controller('chatCtrlr', ['$scope', 'socket',
                 } 
             });
         }
-        
-        
+    
         checkIfLoggedIn();
         
         $('.messageTextarea').keydown(function() {
@@ -76,20 +65,12 @@ app.controller('chatCtrlr', ['$scope', 'socket',
                 return false;
              }
         });
-        
-//        $( document ).ready(function() {
-////            document.getElementById("newRoomName").value = 'Polish';
-//            $( "#newRoomName" ).text( 'Polish' );
-//            document.getElementById("addRoomButton").click();
-//        //});
-//        
+     
         var repaceQM = function(){
             $('.chatMessage').each(function(){
               $(this).html($(this).html().replace('"""', ' '));
             });
-            //alert('aaa');
-        };
-        
+        };      
         
         var tagsToReplace = {
             '&': '&amp;',
@@ -119,32 +100,7 @@ app.controller('chatCtrlr', ['$scope', 'socket',
                 socket.emit("add new room", $scope.new.room.name);
                 console.log("Tworze nowy pokoj o nazwie " + $scope.new.room.name);
             }
-            //var foundEnglish = $.inArray('English', $scope.rooms) > -1;
-            //var foundSpanish = $.inArray('Spanish', $scope.rooms) > -1;
-            //var foundPortuguese = $.inArray('Portuguese', $scope.rooms) > -1;
-            //var foundRussian = $.inArray('Russian', $scope.rooms) > -1;
-            //var foundJapanese = $.inArray('Japanese', $scope.rooms) > -1;
-            //var foundGerman = $.inArray('German', $scope.rooms) > -1;
-            //var foundFrench = $.inArray('French', $scope.rooms) > -1;
-            //var foundTurkish = $.inArray('Turkish', $scope.rooms) > -1;
-            //var foundItalian = $.inArray('Italian', $scope.rooms) > -1;
-            
-            //console.log('foundEnglish: ' + foundEnglish);
-            //console.log('ROOMS1: ' + $scope.rooms);
-            //addLangRooms($scope.rooms);
-            //if (foundEnglish == false) {socket.emit("add new room", 'English');}
-            //if (foundSpanish == false) {socket.emit("add new room", 'Spanish');}
-            //if (foundPortuguese == false) {socket.emit("add new room", 'Portuguese');}
-            //if (foundRussian == false) {socket.emit("add new room", 'Russian');}
-            //if (foundJapanese == false) {socket.emit("add new room", 'Japanese');}
-            //if (foundGerman == false) {socket.emit("add new room", 'German');}
-            //if (foundFrench == false) {socket.emit("add new room", 'French');}
-            //if (foundTurkish == false) {socket.emit("add new room", 'Turkish');}
-            //if (foundItalian == false) {socket.emit("add new room", 'Italian');}
-            //
-            //console.log($scope.rooms + "Found: " + $scope.new.room.name + found);
         };
-
         
         var addLangRooms = function(allRooms) {
             console.log('ROOMS3: ' + allRooms);
@@ -153,13 +109,11 @@ app.controller('chatCtrlr', ['$scope', 'socket',
             console.log('foundEnglish3: ' + foundEnglish);
             if ($.inArray( ('English', allRooms) > -1) == false) {socket.emit("add new room", 'English');}
             if ($.inArray( ('Spanish', allRooms) > -1) == false) {socket.emit("add new room", 'Spanish');}
-        }
-        
+        }       
         
         $scope.joinRoom = function()   {
             socket.emit("start");
-        };
-        
+        };        
         
         $scope.sendMsg = function () {
             if ($scope.msg && $scope.msg.text) {
@@ -218,15 +172,6 @@ app.controller('chatCtrlr', ['$scope', 'socket',
             console.log("Wyswietlam pokoje:" + data);
             $scope.rooms = data;
             $scope.$digest();
-        });
-        
+        });        
     }
 ]);
-
-
-
-//app.post('/login',
-//  passport.authenticate('local', { successRedirect: '/',
-//                                   failureRedirect: '/login',
-//                                   failureFlash: true })
-//);
