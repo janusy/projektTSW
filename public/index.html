@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>CzatApka</title>
+  <title>Talk2Learn</title>
   <script src="/socket.io/socket.io.js"></script>
   <script src="angular/angular.min.js"></script>
   <script src="js/main.js"></script>
@@ -101,8 +101,8 @@
           
       </div><!--roomsField-->
       <div class="newRoomField" data-ng-show="loggedIn">
-              <input type="text" placeholder="room name" data-ng-model="new.room.name">
-              <button class="btn btn-success" style="float: right; margin-right: -5px; margin-top: -5px;" ng-click="newRoom()">Create room</button>
+              <input id="newRoomName" type="text" placeholder="room name" data-ng-model="new.room.name">
+              <button id="addRoomButton" class="btn btn-success" style="float: right; margin-right: -5px; margin-top: -5px;" ng-click="newRoom()">Create room</button>
           </div>
       <div id="debug">
         

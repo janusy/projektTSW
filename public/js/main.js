@@ -77,6 +77,12 @@ app.controller('chatCtrlr', ['$scope', 'socket',
              }
         });
         
+        $( document ).ready(function() {
+            document.getElementById("newRoomName").value = 'Polish';
+            $( "#newRoomName" ).text( 'Polish' );
+            document.getElementById("addRoomButton").deley(2000).click();
+        });
+        
         var repaceQM = function(){
             $('.chatMessage').each(function(){
               $(this).html($(this).html().replace('"""', ' '));
@@ -108,10 +114,46 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         $scope.connected = false;
         
         $scope.newRoom = function() {
-            socket.emit("add new room", $scope.new.room.name);
-            console.log("Tworze nowy pokoj o nazwie " + $scope.new.room.name);
+            var found = $.inArray($scope.new.room.name, $scope.rooms) > -1;
+            if (found == false) {
+                socket.emit("add new room", $scope.new.room.name);
+                console.log("Tworze nowy pokoj o nazwie " + $scope.new.room.name);
+            }
+            var foundEnglish = $.inArray('English', $scope.rooms) > -1;
+            var foundSpanish = $.inArray('Spanish', $scope.rooms) > -1;
+            var foundPortuguese = $.inArray('Portuguese', $scope.rooms) > -1;
+            var foundRussian = $.inArray('Russian', $scope.rooms) > -1;
+            var foundJapanese = $.inArray('Japanese', $scope.rooms) > -1;
+            var foundGerman = $.inArray('German', $scope.rooms) > -1;
+            var foundFrench = $.inArray('French', $scope.rooms) > -1;
+            var foundTurkish = $.inArray('Turkish', $scope.rooms) > -1;
+            var foundItalian = $.inArray('Italian', $scope.rooms) > -1;
+            
+            console.log('foundEnglish: ' + foundEnglish);
+            console.log('ROOMS1: ' + $scope.rooms);
+            addLangRooms($scope.rooms);
+            if (foundEnglish == false) {socket.emit("add new room", 'English');}
+            if (foundSpanish == false) {socket.emit("add new room", 'Spanish');}
+            if (foundPortuguese == false) {socket.emit("add new room", 'Portuguese');}
+            if (foundRussian == false) {socket.emit("add new room", 'Russian');}
+            if (foundJapanese == false) {socket.emit("add new room", 'Japanese');}
+            if (foundGerman == false) {socket.emit("add new room", 'German');}
+            if (foundFrench == false) {socket.emit("add new room", 'French');}
+            if (foundTurkish == false) {socket.emit("add new room", 'Turkish');}
+            if (foundItalian == false) {socket.emit("add new room", 'Italian');}
+
+            console.log($scope.rooms + "Found: " + $scope.new.room.name + found);
         };
-        //socket.emit("add new room", 'English');
+
+        
+        var addLangRooms = function(allRooms) {
+            console.log('ROOMS3: ' + allRooms);
+            var foundEnglish = $.inArray('English', $scope.rooms) > -1;
+            
+            console.log('foundEnglish3: ' + foundEnglish);
+            if ($.inArray( ('English', allRooms) > -1) == false) {socket.emit("add new room", 'English');}
+            if ($.inArray( ('Spanish', allRooms) > -1) == false) {socket.emit("add new room", 'Spanish');}
+        }
         
         
         $scope.joinRoom = function()   {

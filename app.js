@@ -265,17 +265,17 @@ var redisGetPlacesByIndex = function(data, index) {
 
 
 var history = [];
-var rooms = ["Główny"];
+var rooms = ["Main"];
 app.use(express.static("public"));
 app.use(express.static("bower_components"));
 
 io.sockets.on('connection', function (socket) {
-    var roomName = "Główny";
+    var roomName = "Main";
     console.log(roomName);
     history[roomName] = [];
-    socket.room = 'Główny';
-    socket.join("Główny");
-    socket.emit('rec msg',"Witaj na czacie! Jesteś na kanale ogólnym!");	
+    socket.room = 'Main';
+    socket.join("Main");
+    socket.emit('rec msg',"Welcome!");	
 	
 		socket.on('change room', function(room){
         socket.leave(socket.room);
@@ -289,8 +289,8 @@ io.sockets.on('connection', function (socket) {
     });	
 
 		socket.on('start', function(){
-        socket.room = 'Główny';
-        socket.join('Główny');
+        socket.room = 'Main';
+        socket.join('Main');
         console.log("Rozpoczynam nadawanie na kanale: " + socket.room);
     });	
 	
