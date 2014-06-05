@@ -16,7 +16,6 @@
 </head>
 
 <body data-ng-app="czatApka">
-
     <div data-ng-controller="chatCtrlr">
       <nav class="navbar navbar-inverse " role="navigation">
           <div class="container-fluid">
@@ -53,16 +52,14 @@
         </div><!-- /.container-fluid -->
       </nav>
       <div id="all_content">
-    
+        
       <div class="chatLeft" data-ng-hide="loggedIn">
         <h1 style="border-bottom: 1px solid #ccc;">Welcome in Talk2Learn!</h1>
         <p><span style="font-size: 24px; font-weight: bold;"><a href="/login">Log in</a></span> to join the conversation!</p>
         <h3>Do not have an account yet?</h3>
         <p><span style="font-size: 34px; font-weight: bold;"><a href="/signup">Sign up here!</a></span></p>
       </div>
-    
-    
-  
+      
       <div class="chatLeft" id="chatLeft" data-ng-show="loggedIn">
         <div data-ng-hide="connected" class="bulb">
           <img src="img/bullet_red.png"> 
@@ -73,8 +70,7 @@
         <div id="chatLog">
           <!--<div data-ng-repeat="msg in msgs track by $index" class="chatMessage" style="clear:both;">{{msg}}</div>-->
         </div>
-        <div>
-          
+        <div>       
           <p><!--Wprowadz swój login:-->
             <!--<input type="text" id="login_input" data-ng-model="msg.login" maxlength="20" value="{{username}}">-->
             <input type="hidden" id="login_input" maxlength="20" value="{{username}}">
@@ -86,8 +82,7 @@
           <!--<input type="text" data-ng-model="msg.text" maxlength="20">-->
           <textarea data-ng-model="msg.text" maxlength="2000" rows="4" cols="74" class="messageTextarea"></textarea>
           <input class="btn btn-primary btn-lg" id="sendMsgButton" type="submit" value="Send" style="float:right;">
-          <button class="btn btn-default btn-lg" style="float: right; margin-top: -20px;" onclick="$('#chatLog').html('');">Clear</button>
-          
+          <button class="btn btn-default btn-lg" style="float: right; margin-top: -20px;" onclick="$('#chatLog').html('');">Clear</button>          
         </form>
         <div data-ng-model="channelInformation"></div>
       </div><!--chatLeft-->
@@ -95,22 +90,13 @@
           <div data-ng-repeat="room in rooms track by $index">
               <button class="btn btn-default button_room" ng-click="chooseRoom(room);"><img src="/img/logo.png"/>{{room}}</button>
           </div>
-  
-          <!--<button ng-click="joinRoom()">Dołącz do pokoju</button>-->
-  
-          
       </div><!--roomsField-->
       <div class="newRoomField" data-ng-show="loggedIn">
               <input type="text" placeholder="room name" data-ng-model="new.room.name">
               <button class="btn btn-success" style="float: right; margin-right: -5px; margin-top: -5px;" ng-click="newRoom()">Create room</button>
           </div>
-      <div id="debug">
-        
-        
-      </div>
+      <div id="debug"></div>
       </div><!--all_content-->
     </div><!--chatCtrlr-->
-
 </body>
-
 </html>
