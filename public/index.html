@@ -55,8 +55,10 @@
       <div id="all_content">
     
       <div class="chatLeft" data-ng-hide="loggedIn">
-        <h1>Welcome</h1>
-        <p><a href="/login">Log in</a> to cośtam</p>
+        <h1 style="border-bottom: 1px solid #ccc;">Welcome in Talk2Learn!</h1>
+        <p><span style="font-size: 24px; font-weight: bold;"><a href="/login">Log in</a></span> to join the conversation!</p>
+        <h3>Do not have an account yet?</h3>
+        <p><span style="font-size: 34px; font-weight: bold;"><a href="/signup">Sign up here!</a></span></p>
       </div>
     
     
@@ -98,7 +100,7 @@
   
           
       </div><!--roomsField-->
-      <div class="newRoomField">
+      <div class="newRoomField" data-ng-show="loggedIn">
               <input type="text" placeholder="room name" data-ng-model="new.room.name">
               <button class="btn btn-success" style="float: right; margin-right: -5px; margin-top: -5px;" ng-click="newRoom()">Create room</button>
           </div>
