@@ -30,7 +30,6 @@ body {
 .msg_avatar {
 	width: 45px;
 	height: 45px;
-	
 	background-size: cover;
 	margin-right: 8px;
 	float: left;
@@ -134,7 +133,6 @@ body {
 	height: 30px;
 	float: left;
 }
-
 
 .newRoomField{
 	border: solid;
