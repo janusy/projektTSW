@@ -5,10 +5,6 @@ app.factory('socket', function () {
     return socket;
 });
 
-function getRandomInt(min, max) {
-    return Math.floor(Math.random() * (max - min + 1)) + min;
-}
-
 app.controller('chatCtrlr', ['$scope', 'socket',
     function ($scope, socket) {
         
@@ -43,6 +39,13 @@ app.controller('chatCtrlr', ['$scope', 'socket',
             //div.innerHTML = $scope.loggedIn + ' yolo';
           //document.getElementById('login_input').value='textosplayed' ; 
         }
+        
+        $( "#sendMsgButton" ).click(function() {
+            $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight).delay( 4800 );
+        });     
+        
+        
+        
         var getUserAvatar = function() {
             console.log("PRZED WYSLANIEM1 MYURL2: " + "/getAvatarByUser/:" + $scope.username);
             var myUrl2 = "/getAvatarByUser/" + $scope.username;
@@ -97,7 +100,7 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         var prepareMessageWithLogin = function(msg, login, avatar){
             var avatarHtml = '<img src="http://localhost:4000/img/' + avatar + '"' + '.jpg" class="msg_avatar" alt="' + login + '"/>';
             
-            return safe_tags_replace($scope.msg.text.substring(0, 20));
+            return safe_tags_replace($scope.msg.text.substring(0, 2000));
         };
         
         $scope.msgs = [];
@@ -135,16 +138,8 @@ app.controller('chatCtrlr', ['$scope', 'socket',
             $scope.msgs = [];
             socket.emit('change room', room );
             //alert("Przełączyłeś się na pokój " + room);
-            document.getElementById('bullet_green').innerHTML = '<img src="img/bullet_green.png" > Pokój: ' + room;
+            document.getElementById('bullet_green').innerHTML = '<img src="img/bullet_green.png" > Room: ' + room;
         };
-        
-        //$scope.ClearAllMsg = function () {
-        //    if ($scope.msg && $scope.msg.text) {
-        //        //socket.emit('send msg', safe_tags_replace($scope.msg.text.substring(0, 20)));
-        //        socket.emit('send msg', 'siema');
-        //        $scope.msg.text = '';
-        //    }
-        //};
         
         socket.on('connect', function () {
             $scope.connected = true;

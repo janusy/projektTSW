@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>CzatApka</title>
+  <title>Talk2Learn</title>
   <script src="/socket.io/socket.io.js"></script>
   <script src="angular/angular.min.js"></script>
   <script src="js/signupLogin.js"></script>
@@ -29,62 +29,42 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">LChat</a>
-          <ul class="nav navbar-nav">
-            <li data-ng-hide="connected" class="bulb">
-              <img src="img/bullet_red.png">
-            </li>
-            <li data-ng-show="connected" class="bulb">
-              <img src="img/bullet_green.png">
-            </li>
-          </ul>
+          <a class="navbar-brand" href="/"><img src="http://localhost:4000/img/logo.png" id="logo_img"/>Talk2Learn</a>
         </div>  <!-- /.navbar header -->
 
         <!-- COLLAPSE -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <!-- PO ZALOGOWANIU -->
           <ul class="nav navbar-nav" data-ng-show="loggedIn">
-           <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Dodaj<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="/addplace">Miejsce</a></li>
-              <li><a href="/addevent">Wydarzenie</a></li>
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Wyświetl<b class="caret"></b></a>
-            <ul class="dropdown-menu">
-              <li><a href="/showplaces">Miejsca</a></li>
-              <li><a href="/showevents">Wydarzenia</a></li>
-            </ul>
-          </li>
         </ul>
         <!-- /.PO ZALOGOWANIU -->
 
         <!-- NAVBAR RIGHT -->
         <ul class="nav navbar-nav navbar-right" data-ng-hide="loggedIn">
-          <li><a href="/login">Zaloguj</a></li>
-          <li><a href="/signup">Zarejestruj się</a></li>
+          <li><a href="/login">Log in</a></li>
+          <li><a href="/signup">Sign up</a></li>
 
         </ul>
         <ul class="nav navbar-nav navbar-right" data-ng-show="loggedIn">
-          <li ><a href="/">Zalogowano jako {{username}}</a></li>
-          <li><a href="/logout">Wyloguj</a></li>
+          <li ><a href="/">{{username}}</a></li>
+          <li><a href="/logout">Log out</a></li>
         </ul>
         <!-- /.NAVBAR RIGHT -->
       </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
   </nav>
+    
+    <div id="all_content">
     <div class="jumbotron">
-      <h1>Rejestracja</h1>
+      <h2>Sign up</h2>
       <form action="/signup" method="post">
         <input type="text" placeholder="Login" ng-change="change()" data-ng-model="user.username"
         class="form-control" name="username" required/>
-        <span data-ng-show="userExist" style="color:red">Użytkownik o takim loginie już istnieje</span><br />
-        <input type="password" ng-change="changePass()" placeholder="Hasło"  ng-model="user.password" class="form-control" name="password" required/><br />
-        <input type="password" ng-change="changePass()" placeholder="Powtórz hasło" ng-model="user.repeatPassword" class="form-control" name="password" required/>
-        <span data-ng-hide="passwordMatch" style="color:red">Hasła się nie zgadzają</span><br />
-        <select name="avatar">
+        <span data-ng-show="userExist" style="color:red">The user with the login name already exists</span><br />
+        <input type="password" ng-change="changePass()" placeholder="Password"  ng-model="user.password" class="form-control" name="password" required/><br />
+        <input type="password" ng-change="changePass()" placeholder="Repeat password" ng-model="user.repeatPassword" class="form-control" name="password" required/>
+        <span data-ng-hide="passwordMatch" style="color:red">Passwords do not match</span><br />
+        <!--<select name="avatar">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
@@ -93,14 +73,16 @@
           <option value="6">6</option>
           <option value="7">7</option>
           <option value="8">8</option>
-        </select><br/><br/>
+        </select>-->
+        <input type="hidden" name="avatar" value="0"/>
+        <br/><br/>
         
         
         <input class="btn btn-primary btn-lg" ng-disabled="buttonDisabled" type="submit" value="Ding"/>
       </form>
 
     </div>
-
+    </div>
 
   </div>
 </body>

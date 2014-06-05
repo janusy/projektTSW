@@ -71,6 +71,11 @@ var loggedIn = false;
 app.use(express.static("public"));
 app.use(express.static("bower_components"));
 
+function getRandomInt(min, max) {
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+
 
 // STRONA UŻYTKOWNIKA
 app.get('/my-profile', function(req, res) {
@@ -124,14 +129,16 @@ app.get('/logout', function(req, res) {
 });
 
 
+
+
 // REJESTRACJA
 app.post('/signup', function(req, res) {
 	var passwd = req.body.password[0];
 	console.log(passwd);
 	
-	console.log('AVATAR: ' + req.body.avatar);
+	//console.log('AVATAR: ' + req.body.avatar);
 
-	redisSetUser(req.body.username, req.body.password[0], req.body.avatar);
+	redisSetUser(req.body.username, req.body.password[0], getRandomInt(1,8));
 	res.redirect('/');
 });
 

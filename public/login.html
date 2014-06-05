@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>CzatApka</title>
+  <title>Login Talk2Learn</title>
   <script src="/socket.io/socket.io.js"></script>
   <script src="angular/angular.min.js"></script>
   <script src="js/main.js"></script>
@@ -27,34 +27,27 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="/">LChat</a>
-        <ul class="nav navbar-nav">
-          <li data-ng-hide="connected" class="bulb">
-            <img src="img/bullet_red.png">
-          </li>
-          <li data-ng-show="connected" class="bulb">
-            <img src="img/bullet_green.png">
-          </li>
-        </ul>
+        <a class="navbar-brand" href="/"><img src="http://localhost:4000/img/logo.png" id="logo_img"/>Talk2Learn</a>
       </div>
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav navbar-right" data-ng-hide="loggedIn">
-          <li class="active"><a href="/login">Zaloguj</a></li>
-          <li><a href="/signup">Zarejestruj się</a></li>
+          <li class="active"><a href="/login">Log in</a></li>
+          <li><a href="/signup">Sign up</a></li>
         </ul>
       </div>
     </div>
   </nav>
-  <div class="jumbotron">
-    <h1>Logowanie</h1>
-    <form action="/login" method="post">
-      <input type="text" placeholder="login" data-ng-model="user.username" class="form-control" name="username"/><br/>
-      <input type="password" placeholder="hasło" class="form-control" name="password"/><br />
-      <input class="btn btn-primary btn-lg" type="submit" value="Zaloguj"/>
-    </form>
-
+  <div id="all_content">
+    <div class="jumbotron">
+      <h2>Log in</h2>
+      <form action="/login" method="post">
+        <input type="text" placeholder="login" data-ng-model="user.username" class="form-control" name="username"/><br/>
+        <input type="password" placeholder="hasło" class="form-control" name="password"/><br />
+        <input class="btn btn-primary btn-lg" type="submit" value="Zaloguj"/>
+      </form>
+  
+    </div>
   </div>
-
 
 
 </body>
