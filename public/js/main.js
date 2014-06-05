@@ -61,7 +61,13 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         $('.messageTextarea').keydown(function() {
             if (event.keyCode == 13) {                
                 document.getElementById("sendMsgButton").click();
-                //this.form.submit();
+                //return false;
+             }
+        });
+        
+        $('#room_name').keydown(function() {
+            if (event.keyCode == 13) {                
+                document.getElementById("create_room").click();
                 return false;
              }
         });
@@ -98,6 +104,7 @@ app.controller('chatCtrlr', ['$scope', 'socket',
             var found = $.inArray($scope.new.room.name, $scope.rooms) > -1;
             if (found == false) {
                 socket.emit("add new room", $scope.new.room.name);
+                $('#room_name').val('');
                 console.log("Tworze nowy pokoj o nazwie " + $scope.new.room.name);
             }
         };
