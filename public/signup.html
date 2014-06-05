@@ -54,8 +54,7 @@
       <div class="jumbotron chatLeft" style="background-color: #fff !important;">
         <h2>Sign up</h2>
         <form action="/signup" method="post">
-          <input type="text" placeholder="Login" ng-change="change()" data-ng-model="user.username"
-          class="form-control" name="username" required/>
+          <input type="text" placeholder="Login" ng-change="change()" data-ng-model="user.username" class="form-control" name="username" required/>
           <span data-ng-show="userExist" style="color:red">The user with the login name already exists</span><br />
           <input type="password" ng-change="changePass()" placeholder="Password"  ng-model="user.password" class="form-control" name="password" required/><br />
           <input type="password" ng-change="changePass()" placeholder="Repeat password" ng-model="user.repeatPassword" class="form-control" name="password" required/>

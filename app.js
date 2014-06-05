@@ -101,7 +101,6 @@ app.get('/loggedIn', function(req, res) {
 	res.json({username: sessionJSON.passport.user.username})
 })
 
-
 // Log in post
 app.post('/login',
 	passport.authenticate('local', {
@@ -133,6 +132,8 @@ app.post('/signup', function(req, res) {
 app.get('/checkIfUserExists/:username', function(req, res) {
  	var username = req.params.username;
 	redisGet(username).then(function(result) {
+		console.log("RESULT: ");
+		console.log(result);
 		res.json({exist: result});
 	})
 });

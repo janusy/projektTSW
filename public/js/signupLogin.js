@@ -7,15 +7,11 @@ app.factory('socket', function () {
 
 app.controller('appCtrlr', ['$scope', 'socket',
     function ($scope, socket) {
-        
-
         $scope.connected = false;
         $scope.username = "";
         $scope.userExist = false;
         $scope.passwordMatch = true;
         $scope.buttonDisabled = true;
-
-
         $scope.changePass = function () {
             $scope.passwordMatch = true;
             $scope.buttonDisabled = isDisabled();
@@ -36,8 +32,7 @@ app.controller('appCtrlr', ['$scope', 'socket',
 
         $scope.change = function () {
             $scope.userExist = false;
-            $scope.buttonDisabled = isDisabled();
-            
+            $scope.buttonDisabled = isDisabled();        
 
             console.log($scope.user.username);
             var myUrl="/checkIfUserExists/"+$scope.user.username;
@@ -53,8 +48,7 @@ app.controller('appCtrlr', ['$scope', 'socket',
                         $scope.$digest();
                     }
                 }); 
-            }});
-                
+            }});               
         }
 
       var checkIfLoggedIn = function() {
@@ -79,19 +73,11 @@ app.controller('appCtrlr', ['$scope', 'socket',
         function getRandomInt(min, max) {
             return Math.floor(Math.random() * (max - min + 1)) + min;
         }
-  
-
-
-
 
         socket.on('connect', function () {
             $scope.connected = true;
             $scope.$digest();
-        });    
-    
+        });        
     }
-
-
-
 ]);
 

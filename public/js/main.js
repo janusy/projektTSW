@@ -119,15 +119,15 @@ app.controller('chatCtrlr', ['$scope', 'socket',
                 socket.emit("add new room", $scope.new.room.name);
                 console.log("Tworze nowy pokoj o nazwie " + $scope.new.room.name);
             }
-            var foundEnglish = $.inArray('English', $scope.rooms) > -1;
-            var foundSpanish = $.inArray('Spanish', $scope.rooms) > -1;
-            var foundPortuguese = $.inArray('Portuguese', $scope.rooms) > -1;
-            var foundRussian = $.inArray('Russian', $scope.rooms) > -1;
-            var foundJapanese = $.inArray('Japanese', $scope.rooms) > -1;
-            var foundGerman = $.inArray('German', $scope.rooms) > -1;
-            var foundFrench = $.inArray('French', $scope.rooms) > -1;
-            var foundTurkish = $.inArray('Turkish', $scope.rooms) > -1;
-            var foundItalian = $.inArray('Italian', $scope.rooms) > -1;
+            //var foundEnglish = $.inArray('English', $scope.rooms) > -1;
+            //var foundSpanish = $.inArray('Spanish', $scope.rooms) > -1;
+            //var foundPortuguese = $.inArray('Portuguese', $scope.rooms) > -1;
+            //var foundRussian = $.inArray('Russian', $scope.rooms) > -1;
+            //var foundJapanese = $.inArray('Japanese', $scope.rooms) > -1;
+            //var foundGerman = $.inArray('German', $scope.rooms) > -1;
+            //var foundFrench = $.inArray('French', $scope.rooms) > -1;
+            //var foundTurkish = $.inArray('Turkish', $scope.rooms) > -1;
+            //var foundItalian = $.inArray('Italian', $scope.rooms) > -1;
             
             //console.log('foundEnglish: ' + foundEnglish);
             //console.log('ROOMS1: ' + $scope.rooms);
@@ -171,7 +171,7 @@ app.controller('chatCtrlr', ['$scope', 'socket',
                 }
                 console.log("DATA: " + data);
                 socket.emit('send msg', data);
-                repaceQM();
+                //repaceQM();
                 $scope.msg.text = '';
             }
         };
@@ -204,19 +204,12 @@ app.controller('chatCtrlr', ['$scope', 'socket',
             var wiadomosc = data.msg;
             console.log("REC MSG");
             console.log(wiadomosc);
-            //var msgHtml = 'login: ' + data.login + '<img src="http://localhost:4000/img/' + data.avatar + '.jpg" class="msg_avatar" alt="login"/>' + data.msg;
-            //var msgHtml = 'login: ' + data.login + 'msg: ' + data.msg + 'avatar: ' + data.avatar; 
-            var msgHtml = '<div class="chatSingleMessage"><img src="/img/' + data.avatar + '.jpg" class="msg_avatar" alt="login"/>' + data.msg;
-            
-            $scope.msgHtml = 'adffdfd' . wiadomosc;
-            //console.log(data.avatar );
+
+            var msgHtml = '<div class="chatSingleMessage"><img src="/img/' + data.avatar + '.jpg" class="msg_avatar" title="' + data.login + '" alt="' + data.login + '"/>' + data.msg;
             if (data.avatar != undefined) {
                 $( "#chatLog" ).append( msgHtml );
             }
-            
-            
-            
-            //$scope.msgs.push('<img src="http://localhost:4000/img/' + data.avatar + '"' + '.jpg" class="msg_avatar" alt="' + login + '"/>');
+
             console.log(data);
             $scope.$digest();
         });
