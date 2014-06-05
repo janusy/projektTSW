@@ -180,6 +180,8 @@ app.controller('chatCtrlr', ['$scope', 'socket',
             $scope.msgs = [];
             socket.emit('change room', room );
             //alert("Przełączyłeś się na pokój " + room);
+            //$('#chatLog').html('');
+            document.getElementById('chatLog').innerHTML = '';
             document.getElementById('bullet_green').innerHTML = '<img src="img/bullet_green.png" > Room: ' + room;
         };
         

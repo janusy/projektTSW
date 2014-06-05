@@ -7,14 +7,11 @@ var httpServer = require("http").createServer(app);
 var socketio = require("socket.io");
 var io = socketio.listen(httpServer);
 
-//// REDIS
+//Redis create client
 var redis = require("redis"),
 	client = redis.createClient();
-//var _redis = require("redis"),
-//redis = _redis.createClient();
 
-
-// PASSPORT
+// Passport connect
 var connect = require('connect');
 var sessionSecret = 'wielkiSekret44';
 var sessionKey = 'connect.sid';
@@ -51,7 +48,6 @@ passport.use(new LocalStrategy(
 				console.log("Nieudane logowanie...");
 				return done(null, false);
 			}
-
 		});
 	}
 ));
@@ -75,9 +71,7 @@ function getRandomInt(min, max) {
 	return Math.floor(Math.random() * (max - min + 1)) + min;
 }
 
-
-
-// STRONA UŻYTKOWNIKA
+// user page
 app.get('/my-profile', function(req, res) {
 	var loginPage = "public/my-profile.html";
 	res.sendfile(loginPage, {
@@ -85,7 +79,7 @@ app.get('/my-profile', function(req, res) {
 	})
 });
 
-// STRONA LOGOWANIA
+// log in page
 app.get('/login', function(req, res) {
 	var loginPage = "public/login.html";
 	res.sendfile(loginPage, {
@@ -93,7 +87,7 @@ app.get('/login', function(req, res) {
 	})
 });
 
-// STRONA REJESTRACJI
+// sign up page
 app.get('/signup', function(req, res) {
 	var signupPage = "public/signup.html";
 	res.sendfile(signupPage, {
@@ -101,15 +95,14 @@ app.get('/signup', function(req, res) {
 	})
 });
 
-// SPRAWDZ CZY USER ZALOGOWANY
+// Check if usel logged
 app.get('/loggedIn', function(req, res) {
-	var sessionJSON = JSON.parse(sessionStore.sessions[req.sessionID]);
-	
+	var sessionJSON = JSON.parse(sessionStore.sessions[req.sessionID]);	
 	res.json({username: sessionJSON.passport.user.username})
 })
 
 
-// LOGOWANIE
+// Log in post
 app.post('/login',
 	passport.authenticate('local', {
 		failureRedirect: '/login'
@@ -120,7 +113,7 @@ app.post('/login',
 	}
 );
 
-// WYLOGOWYWANIE
+// log out get
 app.get('/logout', function(req, res) {
 	console.log('Wylogowanie...')
 	req.logout();
@@ -128,21 +121,15 @@ app.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
-
-
-
-// REJESTRACJA
+// sign up post
 app.post('/signup', function(req, res) {
 	var passwd = req.body.password[0];
 	console.log(passwd);
-	
-	//console.log('AVATAR: ' + req.body.avatar);
-
 	redisSetUser(req.body.username, req.body.password[0], getRandomInt(1,8));
 	res.redirect('/');
 });
 
-// SPRAWDZ CZY TAKI USERNAME JEST W BAZIE
+// check if user in db
 app.get('/checkIfUserExists/:username', function(req, res) {
  	var username = req.params.username;
 	redisGet(username).then(function(result) {
@@ -159,12 +146,12 @@ app.get('/getAvatarByUser/:username', function(req, res) {
 	})
 });
 
-// FUNKCJA USTAWIAJACA UZYTKOWNIKA DO BAZY REDISA
+// insert user to db
 var redisSetUser = function(username, password, avatar) {
 	var list = [password, avatar];
 	client.rpush(username, list, function(err, reply) {
 			console.log("REPLY SET: " + reply.toString());
-		});
+	});
 
 		console.log("Dodaje do bazy uzytkownika: " + username + " " + password + " " + avatar);
 		client.set(username, password, function(err, reply) {
@@ -173,70 +160,73 @@ var redisSetUser = function(username, password, avatar) {
 		client.set(username + '_avatar', avatar, function(err, reply) {
 			console.log("REPLY AVATAR SET: " + username + '_avatar : ' + avatar + reply.toString());
 		});
-	}
+	}	
 	
-//// FUNKCJA UPDATUJACA UZYTKOWNIKA W BAZIE
-//var redisUpdateUserProfile = function(username, password) {
-//		console.log("Dodaje do bazy uzytkownika: " + username + " " + password);
-//		client.set(username, password, function(err, reply) {
-//			console.log("REPLY SET: " + reply.toString());
-//		});
-//	}	
-	
-	
-// FUNKCJA POBIERAJACA WARTOSC Z BAZY REDISA BEZ HASLA
+// get value from db without pass
 var redisGet = function(data) {
+	
 	console.log("DATA redisGet: " + data);
 	var deferred = Q.defer();
+	
 	client.get(data, function(err, reply) {
 		if (reply) {
 			console.log("REPLY GET IF redisGet: " + reply.toString());
 			deferred.resolve(reply);
-		} else {
+		}
+		else {
 			console.log('redisGet no reply');
 			deferred.resolve(false);
 		}
 	});
 	return deferred.promise;
 };
-// FUNKCJA POBIERAJACA WARTOSC Z BAZY REDISA Z HASLEM
+
+// get value from db with password
 var redisGetPass = function(username, password) {
 	var deferred = Q.defer();
+	
 	client.get(username, function(err, reply) {
 		if (reply) {
 			if (reply.toString() === password)
 				deferred.resolve(true);
 			else 
 				deferred.resolve(false);
-		} else {
+		}
+		else {
 			console.log('no reply');
 			deferred.resolve(false);
 		}
 	});
 	return deferred.promise;
 };
-// FUNKCJA POBIERAJACA WARTOSC Z BAZY REDISA
+
+// get value from redi
 var redisGetPlaces = function(data) {
 	var deferred = Q.defer();
+	
 	client.lrange(data, 0, 111, function(err, reply) {
 		if (reply) {
 			console.log("REPLY GET: " + reply.toString());
 			deferred.resolve(reply);
-		} else {
+		}
+		else {
 			console.log('no reply');
 			deferred.resolve(false);
 		}
 	});
 	return deferred.promise;
 };
+
 
 var redisGetEvents = function(data) {
 	var deferred = Q.defer();
+	
 	client.lrange(data, 0, 111, function(err, reply) {
 		if (reply) {
 			console.log("REPLY GET: " + reply.toString());
 			deferred.resolve(reply);
-		} else {
+		}
+		else {
 			console.log('no reply');
 			deferred.resolve(false);
 		}
@@ -244,25 +234,21 @@ var redisGetEvents = function(data) {
 	return deferred.promise;
 };
 
-// FUNKCJA POBIERAJACA WARTOSC Z BAZY REDISA PO INDEXIE
+// get value from db by index
 var redisGetPlacesByIndex = function(data, index) {
+	
 	var deferred = Q.defer();
 	client.lrange(data, index, index, function(err, reply) {
 		if (reply) {
 			console.log("REPLY GET: " + reply.toString());
 			deferred.resolve(reply);
-		} else {
-			console.log('no reply');
+		}
+		else {
 			deferred.resolve(false);
 		}
 	});
 	return deferred.promise;
 };	
-	
-
-
-
-
 
 var history = [];
 var rooms = ["Główny", "English", "Spanish", "Portuguese", "Russian", "Japanese", "German", "French", "Turkish", "Italian"];
@@ -275,7 +261,7 @@ io.sockets.on('connection', function (socket) {
     history[roomName] = [];
     socket.room = 'Główny';
     socket.join("Główny");
-    socket.emit('rec msg',"Witaj na czacie! Jesteś na kanale ogólnym!");	
+    socket.emit('rec msg',"Welcome in Talk2Learn!");	
 	
 		socket.on('change room', function(room){
         
@@ -289,9 +275,7 @@ io.sockets.on('connection', function (socket) {
 				socket.room = room;
         socket.join(room);
         roomName = socket.room;
-        
-				
-				
+			
 				socket.emit('history', history[room]);
         console.log("przełączyłem na pokój o nazwie:  " + socket.room );
         console.log(history);
@@ -319,9 +303,6 @@ io.sockets.on('connection', function (socket) {
     socket.emit("show rooms", rooms);
 	
 	socket.emit('history', history);
-	
-
-		
 	
 	
 });
