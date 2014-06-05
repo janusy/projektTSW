@@ -41,7 +41,7 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         }
         
         $( "#sendMsgButton" ).click(function() {
-            $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight).delay( 4800 );
+            $('#chatLog').scrollTop($('#chatLog')[0].scrollHeight);
         });     
         
         
@@ -161,7 +161,7 @@ app.controller('chatCtrlr', ['$scope', 'socket',
             
             //var msgHtml = 'login: ' + data.login + '<img src="http://localhost:4000/img/' + data.avatar + '.jpg" class="msg_avatar" alt="login"/>' + data.msg;
             //var msgHtml = 'login: ' + data.login + 'msg: ' + data.msg + 'avatar: ' + data.avatar; 
-            var msgHtml = '<div class="chatSingleMessage"><img src="http://localhost:4000/img/' + data.avatar + '.jpg" class="msg_avatar" alt="login"/>' + data.msg;
+            var msgHtml = '<div class="chatSingleMessage"><img src="/img/' + data.avatar + '.jpg" class="msg_avatar" alt="login"/>' + data.msg;
             
             $scope.msgHtml = 'adffdfd' . wiadomosc;
             

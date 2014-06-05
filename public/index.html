@@ -28,7 +28,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
               </button>
-              <a class="navbar-brand" href="/"><img src="http://localhost:4000/img/logo.png" id="logo_img"/>Talk2Learn</a>
+              <a class="navbar-brand" href="/"><img src="/img/logo.png" id="logo_img"/>Talk2Learn</a>
             </div>  <!-- /.navbar header -->
     
             <!-- COLLAPSE -->
@@ -45,7 +45,7 @@
     
             </ul>
             <ul class="nav navbar-nav navbar-right" data-ng-show="loggedIn">
-              <li ><a href="/my-profile">{{username}}<img src="http://localhost:4000/img/{{avatar}}.jpg" style="margin-top: -12px;" class="msg_avatar"/></a></li>
+              <li ><a href="/my-profile">{{username}}<img src="/img/{{avatar}}.jpg" style="margin-top: -12px;" class="msg_avatar"/></a></li>
               <li><a href="/logout">Log out</a></li>
             </ul>
             <!-- /.NAVBAR RIGHT -->
@@ -56,7 +56,7 @@
     
       <div class="chatLeft" data-ng-hide="loggedIn">
         <h1>Welcome</h1>
-        <p>welcome welcome welcome</p>
+        <p><a href="/login">Log in</a> to cośtam</p>
       </div>
     
     
@@ -83,24 +83,25 @@
           Message:<br/>
           <!--<input type="text" data-ng-model="msg.text" maxlength="20">-->
           <textarea data-ng-model="msg.text" maxlength="2000" rows="4" cols="74" class="messageTextarea"></textarea>
-          <input class="btn btn-primary btn-lg" id="sendMsgButton" type="submit" value="send" style="float:right;">
-          <button class="btn btn-primary btn-lg" onclick="$('#chatLog').html('');">Clear</button>
+          <input class="btn btn-primary btn-lg" id="sendMsgButton" type="submit" value="Send" style="float:right;">
+          <button class="btn btn-default btn-lg" style="float: right; margin-top: -20px;" onclick="$('#chatLog').html('');">Clear</button>
           
         </form>
         <div data-ng-model="channelInformation"></div>
       </div><!--chatLeft-->
       <div class="roomsField" data-ng-show="loggedIn">
           <div data-ng-repeat="room in rooms track by $index">
-              <button ng-click="chooseRoom(room);">{{room}}</button>
+              <button class="btn btn-default button_room" ng-click="chooseRoom(room);"><img src="/img/logo.png"/>{{room}}</button>
           </div>
   
           <!--<button ng-click="joinRoom()">Dołącz do pokoju</button>-->
   
-          <div class="newRoomField">
-              <input type="text" placeholder="room name" data-ng-model="new.room.name">
-              <button ng-click="newRoom()">Create room</button>
-          </div>
+          
       </div><!--roomsField-->
+      <div class="newRoomField">
+              <input type="text" placeholder="room name" data-ng-model="new.room.name">
+              <button class="btn btn-success" style="float: right; margin-right: -5px; margin-top: -5px;" ng-click="newRoom()">Create room</button>
+          </div>
       <div id="debug">
         
         
