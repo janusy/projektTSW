@@ -265,43 +265,53 @@ var redisGetPlacesByIndex = function(data, index) {
 
 
 var history = [];
-var rooms = ["Main"];
+var rooms = ["Główny", "English", "Spanish", "Portuguese", "Russian", "Japanese", "German", "French", "Turkish", "Italian"];
 app.use(express.static("public"));
 app.use(express.static("bower_components"));
 
 io.sockets.on('connection', function (socket) {
-    var roomName = "Main";
+    var roomName = "Główny";
     console.log(roomName);
     history[roomName] = [];
-    socket.room = 'Main';
-    socket.join("Main");
-    socket.emit('rec msg',"Welcome!");	
+    socket.room = 'Główny';
+    socket.join("Główny");
+    socket.emit('rec msg',"Witaj na czacie! Jesteś na kanale ogólnym!");	
 	
 		socket.on('change room', function(room){
-        socket.leave(socket.room);
-        socket.room = room;
+        
+				console.log(socket.room);
+				console.log(room);
+				var socketTest = socket;
+				
+				socket.leave("Główny");
+        console.log(socket);
+				
+				socket.room = room;
         socket.join(room);
         roomName = socket.room;
-        socket.emit('history', history[room]);
+        
+				
+				
+				socket.emit('history', history[room]);
         console.log("przełączyłem na pokój o nazwie:  " + socket.room );
         console.log(history);
         socket.emit('rec msg', "Jesteś na kanale " + room);
     });	
 
 		socket.on('start', function(){
-        socket.room = 'Main';
-        socket.join('Main');
+        socket.room = 'Główny';
+        socket.join('Główny');
         console.log("Rozpoczynam nadawanie na kanale: " + socket.room);
     });	
 	
 		socket.on('send msg', function (data) {
 			history.unshift(data);
-			io.sockets.emit('rec msg', data);
+			io.sockets.in(socket.room).emit('rec msg', data);
 		});
 		
 		socket.on("add new room", function(newRoom){
         history[newRoom] = [];
-        socket.room = newRoom;
+        //socket.room = newRoom;
         rooms.push(newRoom);
         socket.emit("show rooms", rooms);
         socket.broadcast.emit("show rooms", rooms);

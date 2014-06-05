@@ -77,12 +77,12 @@ app.controller('chatCtrlr', ['$scope', 'socket',
              }
         });
         
-        $( document ).ready(function() {
-            document.getElementById("newRoomName").value = 'Polish';
-            $( "#newRoomName" ).text( 'Polish' );
-            document.getElementById("addRoomButton").deley(2000).click();
-        });
-        
+//        $( document ).ready(function() {
+////            document.getElementById("newRoomName").value = 'Polish';
+//            $( "#newRoomName" ).text( 'Polish' );
+//            document.getElementById("addRoomButton").click();
+//        //});
+//        
         var repaceQM = function(){
             $('.chatMessage').each(function(){
               $(this).html($(this).html().replace('"""', ' '));
@@ -129,20 +129,20 @@ app.controller('chatCtrlr', ['$scope', 'socket',
             var foundTurkish = $.inArray('Turkish', $scope.rooms) > -1;
             var foundItalian = $.inArray('Italian', $scope.rooms) > -1;
             
-            console.log('foundEnglish: ' + foundEnglish);
-            console.log('ROOMS1: ' + $scope.rooms);
-            addLangRooms($scope.rooms);
-            if (foundEnglish == false) {socket.emit("add new room", 'English');}
-            if (foundSpanish == false) {socket.emit("add new room", 'Spanish');}
-            if (foundPortuguese == false) {socket.emit("add new room", 'Portuguese');}
-            if (foundRussian == false) {socket.emit("add new room", 'Russian');}
-            if (foundJapanese == false) {socket.emit("add new room", 'Japanese');}
-            if (foundGerman == false) {socket.emit("add new room", 'German');}
-            if (foundFrench == false) {socket.emit("add new room", 'French');}
-            if (foundTurkish == false) {socket.emit("add new room", 'Turkish');}
-            if (foundItalian == false) {socket.emit("add new room", 'Italian');}
-
-            console.log($scope.rooms + "Found: " + $scope.new.room.name + found);
+            //console.log('foundEnglish: ' + foundEnglish);
+            //console.log('ROOMS1: ' + $scope.rooms);
+            //addLangRooms($scope.rooms);
+            //if (foundEnglish == false) {socket.emit("add new room", 'English');}
+            //if (foundSpanish == false) {socket.emit("add new room", 'Spanish');}
+            //if (foundPortuguese == false) {socket.emit("add new room", 'Portuguese');}
+            //if (foundRussian == false) {socket.emit("add new room", 'Russian');}
+            //if (foundJapanese == false) {socket.emit("add new room", 'Japanese');}
+            //if (foundGerman == false) {socket.emit("add new room", 'German');}
+            //if (foundFrench == false) {socket.emit("add new room", 'French');}
+            //if (foundTurkish == false) {socket.emit("add new room", 'Turkish');}
+            //if (foundItalian == false) {socket.emit("add new room", 'Italian');}
+            //
+            //console.log($scope.rooms + "Found: " + $scope.new.room.name + found);
         };
 
         
@@ -200,23 +200,20 @@ app.controller('chatCtrlr', ['$scope', 'socket',
         
         socket.on('rec msg', function (data) {
             var wiadomosc = data.msg;
-            
+            console.log("REC MSG");
+            console.log(wiadomosc);
             //var msgHtml = 'login: ' + data.login + '<img src="http://localhost:4000/img/' + data.avatar + '.jpg" class="msg_avatar" alt="login"/>' + data.msg;
             //var msgHtml = 'login: ' + data.login + 'msg: ' + data.msg + 'avatar: ' + data.avatar; 
             var msgHtml = '<div class="chatSingleMessage"><img src="/img/' + data.avatar + '.jpg" class="msg_avatar" alt="login"/>' + data.msg;
             
             $scope.msgHtml = 'adffdfd' . wiadomosc;
-            
+            //console.log(data.avatar );
             if (data.avatar != undefined) {
                 $( "#chatLog" ).append( msgHtml );
             }
             
             
             
-            console.log("rec msg " + data);
-            console.log($scope.msgs);
-
-            $scope.msgs.unshift(data);
             //$scope.msgs.push('<img src="http://localhost:4000/img/' + data.avatar + '"' + '.jpg" class="msg_avatar" alt="' + login + '"/>');
             console.log(data);
             $scope.$digest();
